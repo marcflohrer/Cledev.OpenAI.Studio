@@ -1,0 +1,17 @@
+# directories
+**/bin/
+**/obj/
+**/out/
+**/mssql/
+
+# files
+Dockerfile*
+*.md
+**/*.md
+*.db
+.env
+
+**/global.json
+**/Dockerfile*
+**/.dockerignore*
+**/*.user
