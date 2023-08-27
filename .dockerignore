@@ -7,7 +7,9 @@
 # files
 Dockerfile*
 *.md
-**/*.md
+**/README.md
+**/README.MD
+**/readme.md
 *.db
 .env
 
@@ -15,3 +17,6 @@ Dockerfile*
 **/Dockerfile*
 **/.dockerignore*
 **/*.user
+
+web/root/.aspnet/DataProtection-Keys/*.xml
+data/mssql/data/*.*

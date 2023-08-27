@@ -1,0 +1,44 @@
+version: "3.3"
+services:
+    web:
+        build:
+            context: .
+        container_name: "cledev.openai.studio"
+        restart: always
+        ports:
+            - "44463:44463"
+            - "44464:44464"
+        volumes:
+            - ./web/root/.aspnet/DataProtection-Keys:/root/.aspnet/DataProtection-Keys:rw
+            - ./data/logs:/app/logs
+        environment:
+            OpenAI__APIKey: "${OpenAI_APIKey}"
+            OpenAI__Organization: "${OpenAI_Organization}"
+            ConnectionStrings__DefaultConnection: "${DatabaseConnectionString}"
+            ASSIGNED_IPADDRESS: ${AssignedIPAddress}
+            ASPNETCORE_HTTPS_PORT: 44464
+            ASPNETCORE_URLS: http://+:44463;https://+:44464
+            ASPNETCORE_ENVIRONMENT: Development
+            DOTNET_RUNNING_IN_CONTAINER: true
+            DOTNET_TieredPGO: 1
+            DOTNET_TC_QuickJitForLoops: 1
+            DOTNET_TieredCompilation: 1
+            DOTNET_TC_QuickJit: 1
+            DOTNET_CLI_TELEMETRY_OPTOUT: 1
+        depends_on:
+            - db
+    db:
+        image: "mcr.microsoft.com/azure-sql-edge:1.0.5"
+        user: root
+        container_name: "openaidb"
+        restart: always
+        cap_add:
+            - SYS_PTRACE
+        ports:
+            - "1433:1433"
+        volumes:
+            - ./data/mssql/data/:/var/opt/mssql/data
+        environment:
+            MSSQL_SA_PASSWORD: ${DatabasePassword}
+            ACCEPT_EULA: 1
+            MSSQL_PID: Developer

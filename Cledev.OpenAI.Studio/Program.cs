@@ -10,6 +10,14 @@ builder.Services.AddServerSideBlazor();
 builder.Services.AddOpenAIClient();
 builder.Services.AddStudioSettings();
 
+builder.WebHost.ConfigureAppConfiguration((builderContext, config) =>
+{
+    // Environment variables override all other configuration sources.
+    builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+        .AddJsonFile($"appsettings.{builderContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
+        .AddEnvironmentVariables();
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -18,9 +26,8 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Error");
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
+    app.UseHttpsRedirection();
 }
-
-app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 

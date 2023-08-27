@@ -260,3 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 /src/Server/Properties
+web/root/.aspnet/DataProtection-Keys/*.xml
+data/mssql/data/*.*
