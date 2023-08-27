@@ -22,13 +22,22 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:7172;http://localhost:5112",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ConnectionStrings__DefaultConnection": "Server=db;Database=master;User=sa;Password=4,HsfCTg,j]L3gc3[)Dg;TrustServerCertificate=True"
       },
       "dotnetRunMessages": true
     },
     "IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Cledev.OpenAI.Studio": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:12348;http://localhost:13530",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

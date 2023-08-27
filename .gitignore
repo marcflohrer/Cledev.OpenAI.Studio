@@ -262,3 +262,4 @@ __pycache__/
 /src/Server/Properties
 web/root/.aspnet/DataProtection-Keys/*.xml
 data/mssql/data/*.*
+Cledev.OpenAI.Studio/data/migrations/*.cs

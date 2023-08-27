@@ -1,7 +1,18 @@
 using Cledev.OpenAI.Extensions;
+using Cledev.OpenAI.Studio.Database;
 using Cledev.OpenAI.Studio.Extensions;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection")!;
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(connectionString);
+});
+
+builder.Services.AddLogger(connectionString);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -9,14 +20,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddOpenAIClient();
 builder.Services.AddStudioSettings();
-
-builder.WebHost.ConfigureAppConfiguration((builderContext, config) =>
-{
-    // Environment variables override all other configuration sources.
-    builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-        .AddJsonFile($"appsettings.{builderContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-        .AddEnvironmentVariables();
-});
+builder.AddConfiguration();
 
 var app = builder.Build();
 
